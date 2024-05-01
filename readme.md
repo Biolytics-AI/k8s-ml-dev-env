@@ -60,6 +60,62 @@ To connect VSCode to your remote development environment:
    - Find the configured SSH target (`k8s-dev`) and click on "Connect".
    - Once connected, you can open the terminal within VSCode to interact with your Kubernetes development environment or open files and folders located on the remote server.
 
+## Kubernetes Configuration Setup
+
+### Overview
+
+For managing and interacting with your Kubernetes cluster, several configuration files are used to authenticate and establish secure communication. These files are stored securely and referenced via environment variables to simplify operations across different environments and tools.
+
+### Configuration Files
+
+Here is a breakdown of the key configuration files and their purpose:
+
+- **Kubeconfig (`biolytics-kubeconfig.yaml`)**: This file contains the configuration data that `kubectl` and other Kubernetes tooling use to connect and authenticate with your Kubernetes cluster.
+  
+- **User Key (`biolytics-ai.key`)**: A private key file used in the SSL/TLS authentication process for securely interacting with the Kubernetes API.
+  
+- **User Certificate (`biolytics-ai.crt`)**: A certificate file that, paired with the user key, verifies the user's identity to the Kubernetes API.
+  
+- **CA Certificate (`ca.crt`)**: The Certificate Authority (CA) certificate, which is used to validate the certificates presented by the Kubernetes API server during SSL/TLS handshakes.
+
+### Environment Variables Setup
+
+To ensure that these files are referenced consistently and securely across scripts and Kubernetes tooling, we set up environment variables pointing to their paths. These variables should be defined in a `.env` file that is sourced at the beginning of your sessions or scripts.
+
+### .env File Contents
+
+Create a `.env` file in your project's root directory (or another appropriate location) and add the following environment variables:
+
+```plaintext
+KUBECONFIG=~/.kube/biolytics-dev/biolytics-kubeconfig.yaml
+K8S_USER_KEY=~/.kube/biolytics-dev/biolytics-ai.key
+K8S_USER_CERT=~/.kube/biolytics-dev/biolytics-ai.crt
+K8S_CA_CERT=~/.kube/biolytics-dev/ca.crt
+```
+
+This setup will ensure that your Kubernetes command-line tools and scripts can automatically find and use the correct configuration files without needing to specify these paths repeatedly.
+
+### Sourcing the .env File
+
+To use the environment variables defined in the `.env` file, you need to source it in your terminal session or include it in your startup script (`~/.bashrc` or `~/.zshrc`):
+
+```bash
+source /path/to/your/.env
+```
+
+Adding this line to your shell's configuration file will automatically set these environment variables every time a new shell session is started.
+
+### Security Note
+
+Ensure that the `.env` file and the configuration files it references are kept secure and are not exposed publicly. Adjust file permissions to limit access to your user only:
+
+```bash
+chmod 600 ~/.kube/biolytics-dev/*
+chmod 600 /path/to/your/.env
+```
+
+This configuration ensures that sensitive credentials and configurations used to access your Kubernetes cluster are managed securely and efficiently, aligning with best practices for DevOps and cloud infrastructure management.
+
 ## todo: Persistent Storage (Optional)
 
 For a more persistent setup, consider adding a Persistent Volume Claim (PVC) to your deployment to retain your workspace data across container restarts.
