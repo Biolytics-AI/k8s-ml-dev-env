@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-environment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev-environment
+  template:
+    metadata:
+      labels:
+        app: dev-environment
+    spec:
+      containers:
+      - name: code-server
+        image: your-registry/your-image-name:tag
+        ports:
+        - containerPort: 8080
