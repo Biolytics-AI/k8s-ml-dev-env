@@ -119,3 +119,11 @@ This configuration ensures that sensitive credentials and configurations used to
 ## todo: Persistent Storage (Optional)
 
 For a more persistent setup, consider adding a Persistent Volume Claim (PVC) to your deployment to retain your workspace data across container restarts.
+
+# todo
+
+ Configure gitlab-ci.yml to automate Docker builds and push to the Harbor registry.
+ Create and apply Kubernetes configuration files (dev-environment-deployment.yaml, dev-environment-service.yaml, dev-environment-pvc.yaml).
+ Document the process and configurations in readme.md to guide developers on how to connect and use the environment.
+ Ensure all Kubernetes configurations and Dockerfiles are committed and reviewed via a pull request.
+ Set up a Git strategy (submodules or scripts) that allows pushing code updates to both GitLab (using VPN) and GitHub to ensure that both repositories stay synchronized.
