@@ -1,0 +1,41 @@
+image: docker:dind
+
+variables:
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_DRIVER: overlay
+  IMAGE_NAME: your-image-name  # replace with your actual image name
+  REGISTRY_URL: your-harbor-registry-url  # replace with your Harbor registry URL
+
+services:
+  - name: docker:dind
+    alias: docker
+    command: ["--tls=false"]
+
+stages:
+  - build
+  - deploy
+
+before_script:
+  - mkdir -p $HOME/.docker
+  - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json  # Ensure DOCKER_AUTH_CONFIG is set in CI/CD variables with appropriate auth for Harbor
+  - export IMAGE_TAG=$CI_COMMIT_SHA
+
+build:
+  stage: build
+  script:
+    - docker login -u $HARBOR_USERNAME -p $HARBOR_PASSWORD $REGISTRY_URL
+    - cat $HOME/.docker/config.json  # Optional: for debugging purposes, remove or comment out in production
+    - docker build -t $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG .
+    - docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
+  only:
+    - main
+  retry:
+    max: 2
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploy commands go here, such as kubectl or helm commands"
+    - kubectl set image deployment/$K8S_DEPLOYMENT_NAME $K8S_CONTAINER_NAME=$REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG --kubeconfig=$KUBECONFIG_PATH
+  only:
+    - main

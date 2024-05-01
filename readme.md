@@ -11,13 +11,17 @@ This guide outlines the steps to deploy and access a containerized development e
 
 ## Deploy the Development Environment
 
-Deploy the containerized development environment to your Kubernetes cluster using the provided YAML configuration file.
+Deploy the containerized development environment to your Kubernetes cluster using a provided script that automates the application of Kubernetes resources and handling of SSH keys.
 
 ```bash
-kubectl apply -f dev-environment-deployment.yaml
+./deploy.sh
 ```
 
-This command creates the necessary Kubernetes resources (such as pods, services, etc.) specified in the `dev-environment-deployment.yaml` file.
+This script performs the following actions:
+
+- Builds and pushes the Docker image to your registry.
+- Applies the Kubernetes configurations, including deployments and services.
+- Configures SSH settings for secure access.
 
 ## Access the Development Environment
 
@@ -36,7 +40,7 @@ This command forwards port 8080 from your local machine to port 8080 on the serv
 To connect VSCode to your remote development environment:
 
 1. **Add SSH Key to the Kubernetes Cluster**:
-   - Ensure your public SSH key is added to the authorized keys on any nodes or pods within the cluster that require SSH access.
+   - Ensure your public SSH key is added to the authorized keys on any nodes or pods within the cluster that require SSH access. This is typically handled during the deployment process or manually added to the `.ssh/authorized_keys` of the relevant user in your container.
 
 2. **Configure SSH in VSCode**:
    - Open the SSH configuration file in VSCode (typically located at `~/.ssh/config`) and add the following entry:
