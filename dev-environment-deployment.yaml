@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: code-server
-        image: your-registry/your-image-name:tag
+        image: ghcr.io/biolytics-ai/k8s-dev-env/vscode-bastion-devcontainer:latest
         ports:
         - containerPort: 8080
