@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     git \
     openssh-server \
     sudo \
+    python3-pip \
     jq \ 
     gh \
     && apt-get clean \
