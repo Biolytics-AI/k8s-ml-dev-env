@@ -25,7 +25,7 @@ jobs:
 
     - name: Build the Docker image
       run: |
-        IMAGE_TAG=ghcr.io/biolytics-ai/k8s-dev-env/vscode-bastion-devcontainer:${{ github.sha }}
+        IMAGE_TAG=ghcr.io/biolytics-ai/k8s-dev-env/vscode-bastion-devcontainer:latest
         docker build . --file Dockerfile --tag $IMAGE_TAG
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
