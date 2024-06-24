@@ -13,12 +13,15 @@ RUN apt-get update && apt-get install -y \
     git \
     openssh-server \
     sudo \
-    yq \ 
     jq \ 
     gh \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
+    
+# Install yq
+RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && \
+    chmod +x /usr/bin/yq
+    
 # Install Poetry for Python dependency management
 RUN pip install --no-cache-dir poetry==1.8.2
 # Set environment variables for Poetry
