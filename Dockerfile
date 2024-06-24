@@ -1,5 +1,5 @@
 # Using a PyTorch image with CUDA support as the base
-ARG BASE_IMAGE=pytorch/pytorch:2.2.1-cuda12.1-cudnn8-runtime
+ARG BASE_IMAGE=nvidia/cuda:12.5.0-runtime-ubuntu22.04
 FROM $BASE_IMAGE as base
 
 # Install necessary packages for building Python packages and managing dependencies
