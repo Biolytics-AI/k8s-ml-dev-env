@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: dev-environment-ingress
-  namespace: biolyticsai-dev
+  namespace: biolytics-dev
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:

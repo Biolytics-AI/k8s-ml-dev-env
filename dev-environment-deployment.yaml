@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dev-environment
-  namespace: biolytics-dev
+  namespace: biolytics-dev  # Match the PVC's namespace
 spec:
   replicas: 1
   selector:
@@ -25,4 +25,5 @@ spec:
             mountPath: /data
       volumes:
         - name: vscode-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: dev-environment-pvc  # Use the PVC here

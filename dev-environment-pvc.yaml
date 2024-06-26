@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: dev-environment-pvc
-  namespace: biolyticsai-dev
+  namespace: biolytics-dev
 spec:
   accessModes:
     - ReadWriteOnce

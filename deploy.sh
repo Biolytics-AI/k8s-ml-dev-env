@@ -12,6 +12,6 @@ kubectl apply -f dev-environment-deployment.yaml
 echo "Applying Kubernetes service..."
 kubectl apply -f dev-environment-service.yaml
 
-kubectl apply -f dev-environment-service-ingress.yaml
+kubectl apply -f dev-environment-service-ingress.yml
 
 echo "Deployment completed successfully!"
