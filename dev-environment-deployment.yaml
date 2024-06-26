@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dev-environment
+  namespace: biolytics-dev
 spec:
   replicas: 1
   selector:
@@ -17,3 +18,11 @@ spec:
         image: ghcr.io/biolytics-ai/k8s-dev-env/vscode-bastion-devcontainer:latest
         ports:
         - containerPort: 8080
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: vscode-data
+            mountPath: /data
+      volumes:
+        - name: vscode-data
+          emptyDir: {}
